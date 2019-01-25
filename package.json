@@ -2,7 +2,15 @@
   "name": "million",
   "version": "0.0.1",
   "license": "MIT",
+  "nodemonConfig": {
+    "ignore": [
+      "js/*",
+      "jade/*",
+      "stylus/*"
+    ]
+  },
   "devDependencies": {
+    "browser-sync": "latest",
     "buble": "latest",
     "cpy-cli": "latest",
     "eslint": "^3.12.2",
@@ -13,31 +21,31 @@
     "jshint": "^2.8.0",
     "jshint-stylish": "^0.4.0",
     "nib": "latest",
+    "nodemon": "1.18.1-alpha.2",
     "npm-run-all": "latest",
+    "oauth": "^0.9.15",
     "onchange": "latest",
     "parallelshell": "latest",
+    "purify-css": "^1.2.6",
     "renamer": "latest",
     "rollup": "latest",
     "rollup-plugin-buble": "latest",
     "rollup-plugin-commonjs": "latest",
     "rollup-plugin-eslint": "latest",
+    "rollup-plugin-html": "latest",
+    "rollup-plugin-json": "latest",
     "rollup-plugin-node-resolve": "latest",
     "rollup-plugin-replace": "latest",
     "rollup-plugin-uglify": "latest",
-    "rollup-plugin-html": "latest",
-    "rollup-plugin-json": "latest",
     "stylus": "latest",
-    "uglify-js": "^2.5.0",
-    "purify-css": "^1.2.3",
-    "browser-sync": "latest"
+    "uglify-js": "^2.5.0"
   },
   "scripts": {
-    "firstrun": "./node_modules/.bin/eslint --init",
-    "start": "NODE_ENV=development npm-run-all --parallel server:watch listen:*",
-    "package": "NODE_ENV=production rollup --config rollup.config.package.js",
+    "start": "NODE_ENV=development npm-run-all --parallel browser:watch listen:* server",
     "production": "NODE_ENV=production rollup -c",
-    "server:watch": "browser-sync start -s 'public' --port 3000 --cors -f 'public'",
-    "listen:js": "onchange 'js/*.js' -- parallelshell 'echo rollup view {{changed}}' 'rollup -c -i {{changed}} -o public/{{changed}}'",
+    "server": "nodemon ./api/server.js",
+    "browser:watch": "browser-sync start -s 'public' --port 3000 --cors -f 'public'",
+    "listen:js": "onchange 'js/*.js' -- parallelshell 'echo {{changed}} updated' 'rollup -c -i {{changed}} -o public/{{changed}}'",
     "listen:views": "onchange 'jade/views/**/*.jade' -- npm run compile:pages",
     "listen:templates": "onchange jade/components/**/*.jade -- npm run compile:templates",
     "listen:stylus": "onchange 'stylus/**/*.styl' -- npm run compile:css",
@@ -51,7 +59,12 @@
     "compile:pages": "jade jade/views -H -o public/"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
     "fg-loadcss": "latest",
-    "vue": "latest"
+    "particles.js": "^2.0.0",
+    "vue": "latest",
+    "vuex": "^3.1.0"
   }
 }

@@ -18,12 +18,9 @@ export default {
     input,
     output: { format, name, file, sourcemap },
     plugins: [
-        Resolve({
-            jsnext: true,
-            main: true
-        }),        
+        Resolve({ jsnext: true, main: true }),        
         html({ include: 'js/templates/*.html' }),
-        json({ include: 'js/*.json' }),        
+        json({ include: 'js/**/*.json' }),        
         Buble({
             transforms: {                
                 classes: true,
@@ -32,18 +29,13 @@ export default {
                 dangerousForOf: true                
             },
             objectAssign: 'Object.assign',
-            exclude: "./node_modules",
-            file: 'public/bundle.js',
-            source: 'js/main.js'
+            exclude: "./node_modules"
         }),
-        Commonjs({
-            include: 'node_modules/**',
-        }),
+        Commonjs({ include: 'node_modules/**'}),
         replace({
             exclude: 'node_modules/**',
             ENV: JSON.stringify(process.env.NODE_ENV || 'development')
         }),
-        // eslint(),
         (process.env.NODE_ENV === 'production' && Uglify({}, minify))
     ]
 }

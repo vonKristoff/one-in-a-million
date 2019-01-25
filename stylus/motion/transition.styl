@@ -1,11 +1,56 @@
-@keyframes pulse
-  0% 
-    box-shadow 0 0 0 0 rgba(204,100,144, 0.4)
-  100%
-    box-shadow 0 0 10px 20px rgba(50,169,44, 0)
-
-.switch-enter-active, .switch-leave-active
+/**
+* modal
+**/
+.modal-slide-enter-active, .modal-slide-leave-active
   transition all .3s ease
-.switch-enter, .switch-leave-to
+
+.modal-slide-enter
+  transform translateX(-100%)
+.modal-slide-enter-to, .modal-slide-leave
+  transform translateX(0)
+.modal-slide-leave-to
   transform translateX(100%)
+
+/**
+* modal message-reveal
+**/
+.message-reveal-enter-active, .message-reveal-leave-active
+  transition all .3s ease
+
+.message-reveal-enter
+  transform translateY(100%)
+  opacity 0
+.message-reveal-enter-to, .message-reveal-leave
+  transform translateY(0)
+.message-reveal-leave-to
+  transform translateY(-100%)
+  opacity 0
+
+/**
+* results card
+**/
+.scale-enter-active, .scale-leave-active
+  transition all .3s ease
+
+.scale-enter
+  transform scale(.5)
+  opacity 0
+.scale-enter-to, .scale-leave
+  transform scale(1)
+.scale-leave-to
+  transform scale(1.5)
+  opacity 0
+
+/**
+* button async
+**/
+.switch-enter-active
+  transition all .2s ease
+.switch-leave-active
+  transition all 0s ease
+.switch-enter
+  opacity 0
+.switch-enter-to, .switch-leave
+  opacity: 1
+.switch-leave-to
   opacity 0
