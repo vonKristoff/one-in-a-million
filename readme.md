@@ -68,7 +68,7 @@ The following are critiques:
 
 ### Design
 
-The design is quite basic, and I added a few transitons to give some UX feedback on interactions. I would have liked to have added some kind of animated dynamic ambience (from data) regarding the weather conditions - such as some particles that reflected the wind speed | direction | chill etc, as the background gradient is supposed to bring about a sense of the temperature (which it does with as much time as I had to tinker with). It's all functional really with not a great deal of creativity in the frontend land. The CSS is not as DRY as it could be.
+The design is quite basic, and I added a few transitons to give some UX feedback on interactions. I would have liked to have added some kind of animated dynamic ambience (from data) regarding the weather conditions - such as some particles that reflected the wind speed | direction | chill etc, as the background gradient is supposed to bring about a sense of the temperature (which it does with as much time as I had to tinker with). It's all functional really with not a great deal of creativity in the frontend land. The CSS is not as DRY as it could be, normally I would definitley use variables and more mixins to keep things sweeter. It's so simple it's responsive by nature.  
 The Icons used are provided by **[Font-Awesome](https://fontawesome.com/v4.7.0/)**.
 
 ### Development
