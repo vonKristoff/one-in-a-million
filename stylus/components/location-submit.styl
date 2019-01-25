@@ -1,0 +1,25 @@
+.location-submit-component
+  color white
+  .ui
+    min-width 5em
+    margin .5em
+    padding .75em 1em
+    border 1px solid transparent
+    border-radius .25em
+    display flex
+    justify-content: center
+    &:hover
+      border 1px solid white
+    &:first-child
+      margin-left 1.5em
+    &:last-child
+      margin-right 0
+    +max(500px)
+      margin .5em 0 !important
+      span
+        display none
+    span
+      margin-left .5em
+  +max(500px)
+    .ui > div
+      font-size: 2em

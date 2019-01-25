@@ -1,0 +1,38 @@
+.app-modal-component
+  position: absolute
+  top 0
+  width 100%
+  height 100vh
+  display: flex
+  align-items: center
+  justify-content: center
+  .location-settings
+    font-family: sans-serif
+    position relative
+    border-radius: 1em
+    padding 2em
+    background-color #0a1840f5
+    box-shadow 0 0 15em black
+    .block-close
+      position absolute
+      top 1em
+      right 1em
+      .ui
+        color white
+      +max(500px)
+        display none
+  .form-fields
+    background transparent    
+    .field-input 
+      justify-content space-around
+      input
+        transition background .3s
+        background-color rgba(220,220,255,.25)
+        border 1px solid rgba(0,0,0,.75)
+        border-radius .5em
+        &:focus
+          background-color coral
+      +max(500px)
+        flex-direction column
+    .submit-options      
+      display flex      
