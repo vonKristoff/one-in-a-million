@@ -1,0 +1,13 @@
+.app-results-component(":class"="styleInactive")
+  .content-background(":style"="styleGradient" ":class"="styleHasResults")
+  .content-foreground
+    transition(name="scale" mode="out-in")
+      .weather-card(v-show="hasLocation")
+        .block--location
+          p {{ location.city }}
+          p {{ location.region }}
+        .block--report(v-if="hasWeather") 
+          p {{ condition.text }}
+          p {{ condition.temperature }}&#8451; 
+        .block--report(v-else)
+          p.small No weather data provided

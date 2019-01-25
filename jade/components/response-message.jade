@@ -1,0 +1,5 @@
+.response-message-component
+  transition(name="message-reveal")
+    .content(v-if="model" ":class"="classStatus")
+      div(":class"="model.class")
+      span {{ model.message }}

@@ -1,0 +1,12 @@
+transition(name="modal-slide" mode="in-out")
+  .app-modal-component(v-show="show")
+    .location-settings
+      .block-close
+        .ui(@click="close")
+          .fa--cross
+      .form-fields
+        .field-input
+          input(type="text" v-model="location" placeholder="Enter your location")
+          .submit-options
+            location-submit(v-for="type in options" ":type"="type" ":key"="type" ":async"="async" @submit="submit")
+      response-message(":model"="response")
