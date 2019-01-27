@@ -40,7 +40,7 @@ Find the routes at `api/routes/api.js`
 * My build process utilises **NPM Scripts**.
 * I am using `Rollup` with `Buble` as a Module bundler and Transpiler respectively.
 * For HTML templates and core page view I am using `Jade`.
-* As the CSS postprocessor I am using `Stylus`.
+* As the CSS preprocessor I am using `Stylus`.
 * For State management I have integrated `Vuex`.
 
 ---
