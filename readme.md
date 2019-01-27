@@ -64,6 +64,9 @@ _overview_
 
 ## Test Comments
 
+Please test with Google Chrome - Safari | iOS will not allow geo location on a http connection (needs a https valid server)
+By the way IF no data returns on Random - keep clicking away until some random match is made - it does work..!
+
 The following are critiques:
 
 ### Design
@@ -75,5 +78,5 @@ The Icons used are provided by **[Font-Awesome](https://fontawesome.com/v4.7.0/)
 
 I have no unit tests.  
 My build scripts and api boilerplate come from my own stock. I would change a few things build wise / optimisation if I were adding a production process (in terms of wrapping a real deliverable).  
-My form input doesn't have any real world validation, but I kept it to a minimum by adding a debounce and min letter requirement. I would have created more components, which would make the app less imparitive, but I'm hoping the code reads clearly enough. The code could be stricter, and I could have alleviated some of the axios request work from the modal component, keeping calls as succinct as possible. The same goes for handling the form response messages, which again should be extracted to a module. 
- 
+My form input doesn't have any real world validation, but I kept it to a minimum by adding a debounce and min letter requirement. I would have created more components, which would make the app less imparitive, but I'm hoping the code reads clearly enough. The code could be stricter, and I could have alleviated some of the axios request work from the modal component, keeping calls as succinct as possible. The same goes for handling the form response messages, which again should be extracted to a module.  
+I also scrambled in a minor ux change last minute to help show validity of location input to relate to the 'submit' button. However adding this feature was a bit hacky!
