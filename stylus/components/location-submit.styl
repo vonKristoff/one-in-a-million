@@ -1,4 +1,5 @@
 .location-submit-component
+  transition opacity .3s
   color white
   .ui
     min-width 5em
@@ -23,3 +24,6 @@
   +max(500px)
     .ui > div
       font-size: 2em
+  &.is-disabled
+    opacity .35
+    pointer-events none

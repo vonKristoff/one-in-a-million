@@ -1,7 +1,7 @@
-.location-submit-component
+.location-submit-component(":class"="validationRequired")
   transition(name="switch" mode="out-in")
     .ui(v-if="isFetching" key="loading")
       .fa--spinner.fa-pulse
     .ui(v-else @click="submit" key="button")
       div(":class"="iconClass")
-      span {{ label }}
+      span {{ model.label }}

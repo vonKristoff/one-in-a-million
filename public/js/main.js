@@ -12159,6 +12159,7 @@
 
 	var template = "<div class=\"app-navigation-component\"><div class=\"layout-flex\"><div class=\"box\"><div class=\"fa--sun\"></div></div><div class=\"box\"><span>Weathering Heights</span></div><div @click=\"toggleModal\" class=\"ui--pop box\"><div :class=\"styleActive\" class=\"fa--sun\"></div></div></div></div>";
 
+	// app-navigation component acts as a top level nav bar to toggle the app-modal
 	var appNavigation = {
 	    name: "app-navigation",
 	    template: template,
@@ -12190,6 +12191,7 @@
 	    }
 	};
 
+	// app-results component renders the background view and weather results
 	var appResults = {
 	    name: "app-results",
 	    template: template$1,
@@ -12209,6 +12211,7 @@
 	        }},
 	        styles)
 	};
+	// perform some dynamic colour represention from the weather data
 	function getColourFromTemperature(temp) {
 	    var range = temp / 40 * 235;
 	    if(range < 0) { range = 235; }
@@ -12224,7 +12227,6 @@
 	    var colour = Math.round(pct * 355);
 	    var brightness = Math.round(pct * 100);
 	    return ("hsl(" + colour + ", 100%, " + brightness + "%)")
-
 	}
 
 	var axios = createCommonjsModule(function (module, exports) {
@@ -13780,10 +13782,12 @@
 
 	});
 
-	var template$2 = "<transition name=\"modal-slide\" mode=\"in-out\"><div v-show=\"show\" class=\"app-modal-component\"><div class=\"location-settings\"><div class=\"block-close\"><div @click=\"close\" class=\"ui\"><div class=\"fa--cross\"></div></div></div><div class=\"form-fields\"><div class=\"field-input\"><input type=\"text\" v-model=\"location\" placeholder=\"Enter your location\"><div class=\"submit-options\"><location-submit v-for=\"type in options\" :type=\"type\" :key=\"type\" :async=\"async\" @submit=\"submit\"></location-submit></div></div></div><response-message :model=\"response\"></response-message></div></div></transition>";
+	var template$2 = "<transition name=\"modal-slide\" mode=\"in-out\"><div v-show=\"show\" class=\"app-modal-component\"><div class=\"location-settings\"><div class=\"block-close\"><div @click=\"close\" class=\"ui\"><div class=\"fa--cross\"></div></div></div><div class=\"form-fields\"><div class=\"field-input\"><input type=\"text\" v-model=\"location\" placeholder=\"Enter your location\"><div class=\"submit-options\"><location-submit v-for=\"model in options\" :model=\"model\" :key=\"model.label\" :async=\"async\" @request=\"submit\"></location-submit></div></div></div><response-message :model=\"response\"></response-message></div></div></transition>";
 
 	var template$3 = "<div class=\"response-message-component\"><transition name=\"message-reveal\"><div v-if=\"model\" :class=\"classStatus\" class=\"content\"><div :class=\"model.class\"></div><span>{{ model.message }}</span></div></transition></div>";
 
+	// HTTP response-message component
+	// executes in the app-modal once a HTTP request has been made
 	var responseMessage = {
 	    name: "response-message",
 	    template: template$3,
@@ -13795,12 +13799,17 @@
 	    }
 	};
 
-	var template$4 = "<div class=\"location-submit-component\"><transition name=\"switch\" mode=\"out-in\"><div v-if=\"isFetching\" key=\"loading\" class=\"ui\"><div class=\"fa--spinner fa-pulse\"></div></div><div v-else=\"v-else\" @click=\"submit\" key=\"button\" class=\"ui\"><div :class=\"iconClass\"></div><span>{{ label }}</span></div></transition></div>";
+	var template$4 = "<div :class=\"validationRequired\" class=\"location-submit-component\"><transition name=\"switch\" mode=\"out-in\"><div v-if=\"isFetching\" key=\"loading\" class=\"ui\"><div class=\"fa--spinner fa-pulse\"></div></div><div v-else=\"v-else\" @click=\"submit\" key=\"button\" class=\"ui\"><div :class=\"iconClass\"></div><span>{{ model.label }}</span></div></transition></div>";
 
+	/** 
+	* location-submit button component
+	* enables reusable behaviour for buttons in the app-modal that make submit calls
+	* (to the weather api)
+	**/
 	var locationSubmit = {
 	    name: "location-submit",
 	    template: template$4,
-	    props: ['type', 'async'],
+	    props: ['model', 'async'],
 	    data: function data() {
 	        return {
 	            pressed: false,
@@ -13811,10 +13820,10 @@
 	            return this.pressed && this.async ? "is-fetching" : ""
 	        },
 	        iconClass: function iconClass() {
-	            return ("fa--" + (Lookup[this.type]))
+	            return ("fa--" + (this.model.label))
 	        },
-	        label: function label() {
-	            return Lookup[this.type]
+	        validationRequired: function validationRequired() {
+	            return this.model.field === "" || this.model.field.length < 3 ? "is-disabled" : ""
 	        }
 	    },
 	    watch: {
@@ -13825,28 +13834,37 @@
 	    methods: {
 	        submit: function submit() {
 	            this.pressed = true;
-	            this.$emit('submit', this.type);
+	            this.$emit('request', this.model.type);
 	        }
 	    }
 	};
-	var Lookup = {
-	    location: "submit",
-	    geo: "geo",
-	    random: "random"
-	};
 
 	var endpoint = "http://localhost:8080/forecast";
+	// app-modal component works as the request settings form
+	// where the HTTP request is made && handled
 	var appModal = {
 	    name: "app-modal",
 	    template: template$2,
 	    components: { locationSubmit: locationSubmit, responseMessage: responseMessage },
 	    data: function data() {
 	        return {
-	            hasGeolocation: navigator.geolocation ? true : false,
-	            location: "",
-	            async: false,
-	            status: 0,
-	            options: ['location', 'geo', 'random']
+	            hasGeolocation: navigator.geolocation ? true : false, // check browser geo location capability
+	            location: "",                           // v-model for input
+	            async: false,                           // is app making a request
+	            status: 0,                              // request status
+	            options: [                              // request button collection
+	                { label: "submit", type: 'location', field: false }, 
+	                { label: "geo", type: 'geo', field: false }, 
+	                { label: "random", type: 'random', field: false }
+	            ]
+	        }
+	    },
+	    created: function created() {
+	        this.options[0].field = this.location; // quick hack to set val as observable data
+	    },
+	    watch: {
+	        location: function(now) {
+	            this.options[0].field = this.location;
 	        }
 	    },
 	    computed: {
@@ -13854,11 +13872,13 @@
 	            return this.$store.state.ui.modal
 	        },
 	        response: function response() {
+	            // pass response type based on respose status
 	            return responseLookup[this.status]
 	        }
 	    },
 	    methods: {
 	        submit: function submit(type) {
+	            // handle the submit flow
 	            if(!this.async) {
 	                this.status = 0;
 	                this.debounce();
@@ -13873,6 +13893,7 @@
 	            var type = ref.type;
 	            var payload = ref.payload;
 
+	            // perform HTTP request
 	            return new Promise(function (resolve, reject) {
 	                axios.post((endpoint + "/" + type), payload)
 	                .then(function (response) {
@@ -13882,6 +13903,7 @@
 	            })            
 	        },
 	        processData: function processData(data) {
+	            // consume the data in the weather store so that it is usable by the app-results component
 	            this.$store.dispatch('weather/update', data)
 	            .then(this.autoCloseModal)
 	            .catch(this.failedRequest);
@@ -13889,6 +13911,8 @@
 	        autoCloseModal: function autoCloseModal() {
 	            var this$1 = this;
 
+	            // notify response-message component
+	            // auto toggle
 	            this.status = 200;
 	            setTimeout(function () {
 	                if(this$1.$store.state.ui.modal) { this$1.$store.commit('ui/toggleModalView'); }
@@ -13898,12 +13922,15 @@
 	        failedRequest: function failedRequest() {
 	            var this$1 = this;
 
+	            // notify response-message component
 	            this.status = 404;
 	            setTimeout(function () { this$1.status = 0; }, 2000);
 	        },
 	        getRequestPayload: function getRequestPayload(type) {
 	            var this$1 = this;
 
+	            // accepts ['geo', 'location', 'random'] as api calls
+	            // defines the payload expected for the given api routes
 	            return new Promise(function (resolve, reject) {
 	                switch(type) {
 	                    case 'geo':
@@ -13930,11 +13957,13 @@
 	        }
 	    }
 	};
+	// lookup for setting response message
 	var responseLookup = {
 	    0: false,
 	    200: { success: true, class: "fa--check", message: "it's a match"},
 	    404: { success: false, class: "fa--cross", message: "No random data found. Try again!" }
 	};
+	// get current geo location
 	function getPosition() {
 	    return new Promise(function (resolve, reject) {
 	        navigator.geolocation.getCurrentPosition(resolve, reject);

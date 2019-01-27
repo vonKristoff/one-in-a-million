@@ -1,5 +1,4 @@
 import template from '../../templates/location-submit.html'
-import classes from './computed-classes'
 /** 
 * location-submit button component
 * enables reusable behaviour for buttons in the app-modal that make submit calls
@@ -8,7 +7,7 @@ import classes from './computed-classes'
 export default {
     name: "location-submit",
     template,
-    props: ['type', 'async'],
+    props: ['model', 'async'],
     data() {
         return {
             pressed: false,
@@ -19,10 +18,10 @@ export default {
             return this.pressed && this.async ? "is-fetching" : ""
         },
         iconClass() {
-            return `fa--${Lookup[this.type]}`
+            return `fa--${this.model.label}`
         },
-        label() {
-            return Lookup[this.type]
+        validationRequired() {
+            return this.model.field === "" || this.model.field.length < 3 ? "is-disabled" : ""
         }
     },
     watch: {
@@ -33,12 +32,8 @@ export default {
     methods: {
         submit() {
             this.pressed = true
-            this.$emit('submit', this.type)
+            this.$emit('request', this.model.type)
         }
     }
 }
-const Lookup = {
-    location: "submit",
-    geo: "geo",
-    random: "random"
-}
+    

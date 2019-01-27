@@ -10,7 +10,7 @@ import { minify } from 'uglify-js'
 
 const format = 'iife'
 const input = 'js/main.js'                                      // input
-const file = 'public/bundle.js'                                 // target output
+const file = 'public/js/main.js'                                 // target output
 const name = process.env.npm_package_name.split("-").join("")   // making it namesafe for JS
 const sourcemap = (process.env.NODE_ENV === 'development')
 

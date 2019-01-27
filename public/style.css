@@ -693,6 +693,11 @@ a {
   color: #9acd32;
 }
 .location-submit-component {
+  -webkit-transition: opacity 0.3s;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -ms-transition: opacity 0.3s;
+  transition: opacity 0.3s;
   color: #fff;
 }
 .location-submit-component .ui {
@@ -738,4 +743,10 @@ a {
   .location-submit-component .ui > div {
     font-size: 2em;
   }
+}
+.location-submit-component.is-disabled {
+  opacity: 0.35;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=35)";
+  filter: alpha(opacity=35);
+  pointer-events: none;
 }

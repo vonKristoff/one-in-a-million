@@ -8,5 +8,5 @@ transition(name="modal-slide" mode="in-out")
         .field-input
           input(type="text" v-model="location" placeholder="Enter your location")
           .submit-options
-            location-submit(v-for="type in options" ":type"="type" ":key"="type" ":async"="async" @submit="submit")
+            location-submit(v-for="model in options" ":model"="model" ":key"="model.label" ":async"="async" @request="submit")
       response-message(":model"="response")

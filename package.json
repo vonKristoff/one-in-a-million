@@ -45,7 +45,7 @@
     "production": "NODE_ENV=production rollup -c",
     "server": "nodemon ./api/server.js",
     "browser:watch": "browser-sync start -s 'public' --port 3000 --cors -f 'public'",
-    "listen:js": "onchange 'js/*.js' -- parallelshell 'echo {{changed}} updated' 'rollup -c -i {{changed}} -o public/{{changed}}'",
+    "listen:js": "onchange 'js/*.js' -- rollup -c",
     "listen:views": "onchange 'jade/views/**/*.jade' -- npm run compile:pages",
     "listen:templates": "onchange jade/components/**/*.jade -- npm run compile:templates",
     "listen:stylus": "onchange 'stylus/**/*.styl' -- npm run compile:css",
@@ -63,7 +63,6 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "fg-loadcss": "latest",
-    "particles.js": "^2.0.0",
     "vue": "latest",
     "vuex": "^3.1.0"
   }

@@ -15,7 +15,19 @@ export default {
             location: "",                           // v-model for input
             async: false,                           // is app making a request
             status: 0,                              // request status
-            options: ['location', 'geo', 'random']  // request button collection
+            options: [                              // request button collection
+                { label: "submit", type: 'location', field: false }, 
+                { label: "geo", type: 'geo', field: false }, 
+                { label: "random", type: 'random', field: false }
+            ]
+        }
+    },
+    created() {
+        this.options[0].field = this.location // quick hack to set val as observable data
+    },
+    watch: {
+        location: function(now) {
+            this.options[0].field = this.location
         }
     },
     computed: {
