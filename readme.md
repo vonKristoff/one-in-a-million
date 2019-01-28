@@ -13,7 +13,6 @@ The app requires no build upon download, however the usual `node-modules` will n
 ```
 npm run install // install dependencies
 npm start		// start development servers
-
 ```
 
 >**TO VIEW TEST**  
