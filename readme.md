@@ -4,7 +4,7 @@ Microapp built using the Yahoo Weather API.
 
 This SPA pulls Weather data from the following options: **manual location** entry; **geo location** or can generate a **random latlong** (which may not pull back data due to the latlong dropping deep out at sea). The results display simple details about the location and its respective conditions. The background gradient is generated based on the conditions available, utilsiing variables such as wind direction, temperature and time.
 
-The build is comprised of a client app using `Vue'js`, and a `Express.js` server acting as the API.
+The build is comprised of a client app using `Vue.js`, and a `Express.js` server acting as the API.
 
 ## Installation
 
